@@ -55,11 +55,27 @@ export const copy = {
     buscar: "Buscar",
   },
   empty: {
-    title: "Nenhuma moto com esse filtro",
-    body: "Fale com a loja no WhatsApp e contamos o que está chegando.",
+    noResults: {
+      title: "Nenhuma moto com esse filtro",
+      body: "Fale com a loja no WhatsApp e contamos o que está chegando.",
+    },
+    unavailable: {
+      title: "Estoque temporariamente indisponível",
+      body: "Não conseguimos carregar as motos agora. Fale com a loja no WhatsApp ou tente de novo em alguns minutos.",
+    },
+  },
+  errorPage: {
+    title: "Algo deu errado",
+    body: "Não foi possível carregar esta página. Tente de novo ou fale com a loja no WhatsApp.",
+    retry: "Tentar de novo",
+  },
+  notFound: {
+    title: "Página não encontrada",
+    body: "O endereço pode ter mudado ou a moto já foi vendida.",
+    backToEstoque: "Ver motos à venda",
   },
   home: {
-    title: "Início",
+    metaTitle: "SP Motos | Loja de Motos Seminovas em Pelotas/RS",
     heroKicker: "Sua próxima moto está aqui",
     heroTitleLead: "Há 28 anos",
     heroTitleAccent: "realizando sonhos.",

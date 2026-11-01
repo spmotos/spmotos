@@ -49,7 +49,7 @@ export const MotoCard: React.FC<MotoCardProps> = ({ moto, detailHref, priority =
 
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-stone bg-surface shadow-sm">
-      <Link href={detailHref} className="relative block aspect-[4/3] bg-muted">
+      <Link href={detailHref} scroll={false} className="relative block aspect-[4/3] bg-muted">
         {moto.imagemPrincipal ? (
           <Image
             src={moto.imagemPrincipal}
@@ -71,6 +71,7 @@ export const MotoCard: React.FC<MotoCardProps> = ({ moto, detailHref, priority =
       <div className="flex flex-1 flex-col gap-3 p-4">
         <Link
           href={detailHref}
+          scroll={false}
           className="line-clamp-2 text-base font-bold text-page-foreground hover:text-moss"
         >
           {moto.titulo}
@@ -94,6 +95,7 @@ export const MotoCard: React.FC<MotoCardProps> = ({ moto, detailHref, priority =
         </div>
         <Link
           href={detailHref}
+          scroll={false}
           className="mt-auto inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-stone bg-muted px-4 py-2.5 text-sm font-semibold text-page-foreground hover:border-accent hover:text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:outline-none"
         >
           {copy.card.details}

@@ -1,12 +1,11 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useId, useRef } from "react";
 import { MotoDetailView } from "@/components/MotoDetailView";
 import { PublicMoto } from "@/lib/clickgarage/types";
 import { WhatsAppContactLink } from "@/lib/store-whatsapp";
 import { copy } from "@/lib/copy";
-import { buildHomeHrefWithoutMoto } from "@/lib/estoque-query";
 
 interface MotoDetailModalProps {
   moto: PublicMoto;
@@ -27,14 +26,10 @@ const CloseIcon: React.FC = () => (
   </svg>
 );
 
+/** O modal só existe via rota interceptada (navegação interna), então sempre há histórico para voltar. */
 const useCloseMotoModal = (): (() => void) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-
-  return useCallback((): void => {
-    const next = buildHomeHrefWithoutMoto(new URLSearchParams(searchParams.toString()));
-    router.replace(next, { scroll: false });
-  }, [router, searchParams]);
+  return useCallback((): void => router.back(), [router]);
 };
 
 interface MotoDetailModalFrameProps {
@@ -133,11 +128,7 @@ export const MotoDetailModal: React.FC<MotoDetailModalProps> = ({ moto, whatsapp
   );
 };
 
-interface MotoDetailMissingModalProps {
-  motoId: string;
-}
-
-export const MotoDetailMissingModal: React.FC<MotoDetailMissingModalProps> = ({ motoId }) => {
+export const MotoDetailMissingModal: React.FC = () => {
   const onClose = useCloseMotoModal();
   const titleId = useId();
   const keyboardRootRef = useRef<HTMLDivElement>(null);
@@ -151,7 +142,6 @@ export const MotoDetailMissingModal: React.FC<MotoDetailMissingModalProps> = ({ 
     >
       <p className="text-pretty text-moss">
         {copy.detail.modalNotFound}
-        <span className="sr-only">{motoId}</span>
       </p>
       <button
         type="button"

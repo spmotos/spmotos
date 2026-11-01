@@ -19,7 +19,7 @@ export const generateMetadata = async ({
   const { id } = await params;
   const moto = await getMotoById(id);
   if (!moto) {
-    return { title: "Moto não encontrada" };
+    return { title: "Moto não encontrada", robots: { index: false } };
   }
   return {
     title: moto.titulo,

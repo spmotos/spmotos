@@ -102,7 +102,7 @@ export const HomeEstoqueGrid: React.FC<HomeEstoqueGridProps> = ({
 
   return (
     <div className="flex flex-col gap-6">
-      <MotoGrid motos={items} listParams={listParams} />
+      <MotoGrid motos={items} />
       <div className="sr-only" aria-live="polite" aria-atomic="true">
         {liveMessage}
       </div>

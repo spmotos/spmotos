@@ -1,33 +1,54 @@
 import type { Metadata } from "next";
 import type { FC } from "react";
-import { Suspense } from "react";
+import { permanentRedirect } from "next/navigation";
 import { EmptyState } from "@/components/EmptyState";
 import { EstoqueFilters } from "@/components/EstoqueFilters";
 import { HomeEstoqueGrid } from "@/components/HomeEstoqueGrid";
 import { HomeHero } from "@/components/HomeHero";
 import { HomeTrustStrip } from "@/components/HomeTrustStrip";
-import { MotoDetailMissingModal, MotoDetailModal } from "@/components/MotoDetailModal";
 import {
   ESTOQUE_BATCH_SIZE,
-  getMotoById,
+  ListMotosBatchResult,
   listMotos,
   listMotosBatch,
   marcasFromMotos,
 } from "@/lib/clickgarage/repository";
+import { ListMotosParams } from "@/lib/clickgarage/types";
 import { copy } from "@/lib/copy";
-import { parseEstoqueParams, parseMotoDetailId, QueryValueMap } from "@/lib/estoque-query";
-import { HOME_RECENT_ORDER } from "@/lib/home-hero";
 import {
-  buildWhatsAppHrefForMotoLinks,
-  buildWhatsAppHrefPlainLinks,
-  motoPageUrl,
-} from "@/lib/whatsapp";
+  buildMotoDetailHref,
+  parseEstoqueParams,
+  parseLegacyMotoId,
+  QueryValueMap,
+} from "@/lib/estoque-query";
+import { HOME_RECENT_ORDER } from "@/lib/home-hero";
+import { buildWhatsAppHrefPlainLinks } from "@/lib/whatsapp";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = {
-  title: copy.nav.home,
+  /** `title.template` do layout não se aplica ao page.tsx do mesmo segmento. */
+  title: { absolute: copy.home.metaTitle },
   description: copy.tagline,
+};
+
+interface HomeEstoqueData {
+  marcas: string[];
+  batch: ListMotosBatchResult;
+}
+
+/** Feed fora do ar não derruba a home: hero e contatos continuam visíveis. */
+const loadHomeEstoque = async (
+  listParams: ListMotosParams,
+): Promise<HomeEstoqueData | null> => {
+  try {
+    const estoqueBase = await listMotos({ ordenar: HOME_RECENT_ORDER });
+    const batch = await listMotosBatch(listParams, 0, ESTOQUE_BATCH_SIZE);
+    return { marcas: marcasFromMotos(estoqueBase), batch };
+  } catch (error) {
+    console.error("Home: falha ao carregar estoque do feed", error);
+    return null;
+  }
 };
 
 interface HomePageProps {
@@ -36,44 +57,43 @@ interface HomePageProps {
 
 const HomePage: FC<HomePageProps> = async ({ searchParams }) => {
   const query = await searchParams;
+  const legacyMotoId = parseLegacyMotoId(query);
+  if (legacyMotoId) {
+    permanentRedirect(buildMotoDetailHref(legacyMotoId));
+  }
+
   const params = parseEstoqueParams(query);
   const listParams = {
     ...params,
     ordenar: params.ordenar ?? HOME_RECENT_ORDER,
   };
 
-  const estoqueBase = await listMotos({ ordenar: HOME_RECENT_ORDER });
-  const { items: initialItems, total } = await listMotosBatch(
-    listParams,
-    0,
-    ESTOQUE_BATCH_SIZE,
-  );
-
+  const estoque = await loadHomeEstoque(listParams);
   const whatsappLinks = buildWhatsAppHrefPlainLinks(`Olá! Quero falar com a ${copy.brand}.`);
-  const marcas = marcasFromMotos(estoqueBase);
 
   const busca = params.busca ?? "";
   const marca = params.marca ?? "";
   const valorMax = params.valorMax !== undefined ? String(params.valorMax) : "";
 
-  const motoId = parseMotoDetailId(query);
-  const detailMoto = motoId ? await getMotoById(motoId) : null;
-  const detailWhatsappLinks =
-    detailMoto !== null
-      ? buildWhatsAppHrefForMotoLinks(detailMoto, motoPageUrl(detailMoto.id))
-      : [];
-
   return (
     <>
       <HomeHero />
       <div className="relative z-10 mt-4 md:-mt-8">
-        <EstoqueFilters marcas={marcas} busca={busca} marca={marca} valorMax={valorMax} />
+        <EstoqueFilters
+          marcas={estoque?.marcas ?? []}
+          busca={busca}
+          marca={marca}
+          valorMax={valorMax}
+        />
       </div>
       <div className="bg-page">
-        {total === 0 ? (
-          <section className="py-10 md:py-12">
+        {estoque === null || estoque.batch.total === 0 ? (
+          <section id="estoque" className="scroll-mt-header py-10 md:py-12">
             <div className="site-container">
-              <EmptyState whatsappLinks={whatsappLinks} />
+              <EmptyState
+                whatsappLinks={whatsappLinks}
+                variant={estoque === null ? "unavailable" : "noResults"}
+              />
             </div>
           </section>
         ) : (
@@ -87,8 +107,8 @@ const HomePage: FC<HomePageProps> = async ({ searchParams }) => {
               </div>
               <HomeEstoqueGrid
                 key={JSON.stringify(listParams)}
-                initialItems={initialItems}
-                total={total}
+                initialItems={estoque.batch.items}
+                total={estoque.batch.total}
                 listParams={listParams}
               />
             </div>
@@ -96,16 +116,6 @@ const HomePage: FC<HomePageProps> = async ({ searchParams }) => {
         )}
         <HomeTrustStrip />
       </div>
-      {motoId && detailMoto ? (
-        <Suspense fallback={null}>
-          <MotoDetailModal moto={detailMoto} whatsappLinks={detailWhatsappLinks} />
-        </Suspense>
-      ) : null}
-      {motoId && !detailMoto ? (
-        <Suspense fallback={null}>
-          <MotoDetailMissingModal motoId={motoId} />
-        </Suspense>
-      ) : null}
     </>
   );
 };

@@ -37,9 +37,10 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: ReactNode;
+  modal: ReactNode;
 }
 
-const RootLayout: FC<RootLayoutProps> = ({ children }) => (
+const RootLayout: FC<RootLayoutProps> = ({ children, modal }) => (
   <html lang="pt-BR" className={`${geistSans.variable} h-full antialiased`}>
     <head>
       <link rel="preconnect" href="https://storage.clickgarage.com.br" />
@@ -59,6 +60,7 @@ const RootLayout: FC<RootLayoutProps> = ({ children }) => (
       <SiteFooter
         whatsappLinks={buildWhatsAppHrefPlainLinks(`Olá! Quero falar com a ${copy.brand}.`)}
       />
+      {modal}
     </body>
   </html>
 );
