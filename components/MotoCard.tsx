@@ -47,8 +47,8 @@ export const MotoCard: React.FC<MotoCardProps> = ({ moto, detailHref }) => {
   const badge = moto.km === 0 ? copy.card.badgeNew : copy.card.badgeUsed;
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-stone bg-surface shadow-sm">
-      <Link href={detailHref} scroll={false} className="relative block aspect-[4/3] bg-muted">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-stone bg-surface shadow-sm focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 hover:border-accent">
+      <div className="relative aspect-[4/3] bg-muted">
         {moto.imagemPrincipal ? (
           <Image
             src={moto.imagemPrincipal}
@@ -65,15 +65,18 @@ export const MotoCard: React.FC<MotoCardProps> = ({ moto, detailHref }) => {
         <span className="absolute top-3 left-3 z-10 rounded-md bg-accent px-2 py-0.5 text-[11px] font-bold text-accent-foreground">
           {badge}
         </span>
-      </Link>
+      </div>
       <div className="flex flex-1 flex-col gap-3 p-4">
-        <Link
-          href={detailHref}
-          scroll={false}
-          className="line-clamp-2 text-base font-bold text-page-foreground hover:text-moss"
-        >
-          {moto.titulo}
-        </Link>
+        <h3 className="line-clamp-2 text-base font-bold text-page-foreground group-hover:text-moss">
+          {/* Um link por card: o ::after cobre o card inteiro (uma parada de Tab, área de toque total). */}
+          <Link
+            href={detailHref}
+            scroll={false}
+            className="after:absolute after:inset-0 after:z-20 after:content-[''] focus-visible:outline-none"
+          >
+            {moto.titulo}
+          </Link>
+        </h3>
         <p className="text-price-fluid text-sale">{formatPriceCompact(moto.valorAnunciado)}</p>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-moss">
           <span className="inline-flex items-center gap-1">
@@ -91,14 +94,13 @@ export const MotoCard: React.FC<MotoCardProps> = ({ moto, detailHref }) => {
             {moto.anoModelo}
           </span>
         </div>
-        <Link
-          href={detailHref}
-          scroll={false}
-          className="mt-auto inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-stone bg-muted px-4 py-2.5 text-sm font-semibold text-page-foreground hover:border-accent hover:text-accent focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:outline-none"
+        <span
+          className="mt-auto inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg border border-stone bg-muted px-4 py-2.5 text-sm font-semibold text-page-foreground group-hover:border-accent group-hover:text-accent"
+          aria-hidden="true"
         >
           {copy.card.details}
-          <span aria-hidden="true">→</span>
-        </Link>
+          <span>→</span>
+        </span>
       </div>
     </article>
   );

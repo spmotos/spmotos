@@ -32,13 +32,6 @@ export const WhatsAppContactButtons: React.FC<WhatsAppContactButtonsProps> = ({
     return copy.whatsappNegotiateWith(name);
   };
 
-  const getAriaLabel = (name: string, phone: string): string => {
-    if (action === "sell") {
-      return copy.whatsappAriaSell(name, phone);
-    }
-    return copy.whatsappAriaNegotiate(name, phone);
-  };
-
   if (layout === "inline") {
     return (
       <span className="inline-flex min-h-[44px] flex-wrap items-center justify-center gap-x-1.5 gap-y-1 lg:min-h-0">
@@ -53,7 +46,7 @@ export const WhatsAppContactButtons: React.FC<WhatsAppContactButtonsProps> = ({
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={copy.whatsappAriaHeader(contact.name, contact.displayPhone)}
+              aria-label={copy.whatsappAriaLink(`${contact.name}, ${contact.displayPhone}`)}
               className={`inline-flex min-h-[44px] items-center lg:min-h-0 ${headerLinkClassName}`}
             >
               {contact.name}
@@ -82,7 +75,9 @@ export const WhatsAppContactButtons: React.FC<WhatsAppContactButtonsProps> = ({
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={getAriaLabel(contact.name, contact.displayPhone)}
+            aria-label={copy.whatsappAriaLink(
+              `${getPrimaryLabel(contact.name)}, ${contact.displayPhone}`,
+            )}
             className={`${ctaClassName} px-3 sm:px-4`}
           >
             <span

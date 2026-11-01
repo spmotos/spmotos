@@ -17,11 +17,8 @@ export const copy = {
   whatsappChooseContact: "Escolha com quem conversar:",
   whatsappNegotiateWith: (name: string): string => `Negociar com ${name}`,
   whatsappSellWith: (name: string): string => `Quero vender minha moto — ${name}`,
-  whatsappAriaNegotiate: (name: string, phone: string): string =>
-    `Negociar no WhatsApp com ${name}, ${phone}`,
-  whatsappAriaSell: (name: string, phone: string): string =>
-    `Quero vender minha moto no WhatsApp com ${name}, ${phone}`,
-  whatsappAriaHeader: (name: string, phone: string): string => `WhatsApp com ${name}, ${phone}`,
+  /** Começa pelo texto visível (WCAG 2.5.3): comando de voz "clicar em Negociar com Sandra" funciona. */
+  whatsappAriaLink: (visibleText: string): string => `${visibleText} (WhatsApp, abre em nova aba)`,
   social: {
     heading: "Redes sociais",
     ariaFollow: (network: string): string => `SP Motos no ${network} (abre em nova aba)`,

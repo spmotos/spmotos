@@ -7,7 +7,7 @@ import { copy } from "@/lib/copy";
 import { buildWhatsAppHrefPlainLinks } from "@/lib/whatsapp";
 
 const HeaderSearchFallback: React.FC = () => (
-  <div className="hidden h-11 w-full max-w-xs rounded-full border border-chrome-border lg:block" />
+  <div className="hidden h-11 rounded-full border border-chrome-border lg:block lg:w-72 2xl:w-96" />
 );
 
 export const SiteHeader: React.FC = () => {

@@ -11,7 +11,7 @@ export const HeaderSearch: React.FC = () => {
   const busca = searchParams.get("busca") ?? "";
 
   return (
-    <form action="/" method="get" className="hidden min-w-0 flex-1 items-center gap-2 lg:flex lg:max-w-xs 2xl:max-w-sm">
+    <form action="/" method="get" className="hidden items-center gap-2 lg:flex lg:w-72 2xl:w-96">
       <label className="sr-only" htmlFor="header-busca">
         {copy.searchPlaceholder}
       </label>

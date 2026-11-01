@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { FC, ReactNode } from "react";
 import { Geist } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { JsonLdScript } from "@/components/JsonLdScript";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -59,6 +61,14 @@ const RootLayout: FC<RootLayoutProps> = ({ children, modal }) => (
         whatsappLinks={buildWhatsAppHrefPlainLinks(`Olá! Quero falar com a ${copy.brand}.`)}
       />
       {modal}
+      {/* Scripts servidos em /_vercel/* só existem na Vercel. Sem cookies nem token no cliente;
+          ativar no painel do projeto (Analytics e Speed Insights) senão retornam 404. */}
+      {process.env.VERCEL ? (
+        <>
+          <Analytics />
+          <SpeedInsights />
+        </>
+      ) : null}
     </body>
   </html>
 );

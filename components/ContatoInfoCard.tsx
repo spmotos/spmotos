@@ -61,7 +61,7 @@ export const ContatoInfoCard: React.FC<ContatoInfoCardProps> = ({ whatsappLinks 
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={copy.whatsappAriaHeader(contact.name, contact.displayPhone)}
+                  aria-label={copy.whatsappAriaLink(`${contact.name} — ${contact.displayPhone}`)}
                   className="break-words font-semibold text-foreground underline-offset-2 hover:underline"
                 >
                   {contact.name}

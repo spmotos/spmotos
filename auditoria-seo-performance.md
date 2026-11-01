@@ -4,7 +4,20 @@ Data: 31/10/2026 · Base: commit `044f495` · Next.js 16.3.5
 
 Método: leitura de todos os arquivos de `app/`, `components/` e `lib/`; build de produção; Lighthouse mobile; teste de navegação com Chrome (390px e 1366px); conferência na documentação do Next 16 (`node_modules/next/dist/docs`).
 
-## Placar atual (Lighthouse mobile, build local)
+## Status da execução (01/11/2026)
+
+| Fase | Commit | Situação |
+|---|---|---|
+| 1. Indexação | `c8615ad` | ✅ concluída |
+| 2. SEO local | `60fb5aa` | ✅ concluída |
+| 3. Performance | `e04404e` | ✅ concluída, exceto pôster do vídeo (precisa de `ffmpeg`) |
+| 4. Qualidade | — | ✅ concluída; também corrige a busca do header com largura zero no desktop |
+
+Lighthouse mobile depois das 4 fases: SEO, acessibilidade e boas práticas 100 em todas as páginas. Performance: home 92 (LCP ~3s simulado), moto 96, contato 100, venda 99.
+
+Pendências fora do código: ativar Analytics e Speed Insights no painel da Vercel, definir `SITE_URL`, Search Console, Perfil da Empresa no Google.
+
+## Placar inicial (Lighthouse mobile, build local)
 
 | Página | Performance | Acessibilidade | Boas práticas | SEO | LCP |
 |---|---|---|---|---|---|
