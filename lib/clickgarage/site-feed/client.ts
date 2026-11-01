@@ -1,7 +1,8 @@
 import { cache } from "react";
+import { z } from "zod";
 import { getClickGarageFeedUrl } from "@/lib/env";
 import { SiteFeedRequestError } from "./errors";
-import { SiteFeedItem, siteFeedResponseSchema } from "./schema";
+import { SiteFeedItem, siteFeedItemSchema } from "./schema";
 
 const FEED_TIMEOUT_MS = 30_000;
 
@@ -34,5 +35,14 @@ export const fetchSiteFeedItems = cache(async (): Promise<SiteFeedItem[]> => {
   }
 
   const json: unknown = await response.json();
-  return siteFeedResponseSchema.parse(json);
+  const rawItems = z.array(z.unknown()).parse(json);
+  return rawItems.flatMap((raw) => {
+    const result = siteFeedItemSchema.safeParse(raw);
+    if (result.success) {
+      return [result.data];
+    }
+    /** Cadastro incompleto no Click Garage (ex.: km/valor nulos) não derruba o estoque inteiro. */
+    console.warn("Feed: item ignorado por dados inválidos", result.error.issues);
+    return [];
+  });
 });
