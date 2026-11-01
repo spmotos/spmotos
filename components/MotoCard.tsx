@@ -7,7 +7,6 @@ import { PublicMotoListItem } from "@/lib/clickgarage/types";
 interface MotoCardProps {
   moto: PublicMotoListItem;
   detailHref: string;
-  priority?: boolean;
 }
 
 interface SpecIconProps {
@@ -43,7 +42,7 @@ const SpecIcon: React.FC<SpecIconProps> = ({ icon }) => {
   );
 };
 
-export const MotoCard: React.FC<MotoCardProps> = ({ moto, detailHref, priority = false }) => {
+export const MotoCard: React.FC<MotoCardProps> = ({ moto, detailHref }) => {
   const cilindrada = formatCilindrada(moto.motor);
   const badge = moto.km === 0 ? copy.card.badgeNew : copy.card.badgeUsed;
 
@@ -55,7 +54,6 @@ export const MotoCard: React.FC<MotoCardProps> = ({ moto, detailHref, priority =
             src={moto.imagemPrincipal}
             alt={moto.titulo}
             fill
-            priority={priority}
             className="object-cover"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 25vw, 20vw"
           />

@@ -25,8 +25,7 @@ import { HOME_RECENT_ORDER } from "@/lib/home-hero";
 import { buildDefaultOpenGraph } from "@/lib/site-metadata";
 import { buildWhatsAppHrefPlainLinks } from "@/lib/whatsapp";
 
-export const revalidate = 300;
-
+/** Home é dinâmica (lê searchParams); o cache de 5 min fica no fetch do feed (`site-feed/client.ts`). */
 export const metadata: Metadata = {
   /** `title.template` do layout não se aplica ao page.tsx do mesmo segmento. */
   title: { absolute: copy.home.metaTitle },

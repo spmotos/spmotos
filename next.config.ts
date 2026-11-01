@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
+    formats: ["image/avif", "image/webp"],
+    /** Fotos do Click Garage mudam de URL quando trocam; 30 dias evita reotimizar a cada 4 h. */
+    minimumCacheTTL: 2_592_000,
     remotePatterns: [
       {
         protocol: "https",

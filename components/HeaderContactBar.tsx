@@ -39,10 +39,12 @@ export const HeaderContactBar: React.FC<HeaderContactBarProps> = ({ whatsappLink
         className="inline-flex min-h-[44px] max-w-full items-center gap-1.5 hover:text-accent focus-visible:text-accent focus-visible:outline-none lg:min-h-0"
       >
         <PinIcon />
-        <span className="truncate">{copy.contato.address}</span>
+        <span className="truncate md:hidden">{copy.contato.addressShort}</span>
+        <span className="hidden truncate md:inline">{copy.contato.address}</span>
       </Link>
-      <span className="hidden h-3 w-px bg-chrome-border sm:block" aria-hidden="true" />
-      <span className="inline-flex min-h-[44px] items-center gap-1.5 lg:min-h-0">
+      {/* No mobile o horário já aparece no hero; aqui só ocuparia uma linha acima da dobra. */}
+      <span className="hidden h-3 w-px bg-chrome-border md:block" aria-hidden="true" />
+      <span className="hidden min-h-[44px] items-center gap-1.5 md:inline-flex lg:min-h-0">
         <ClockIcon />
         {copy.contato.hours}
       </span>

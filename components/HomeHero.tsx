@@ -22,7 +22,8 @@ export const HomeHero: React.FC = () => (
         fill
         className="object-cover object-[var(--hero-banner-position)]"
         sizes="100vw"
-        priority
+        loading="eager"
+        fetchPriority="high"
       />
     </div>
 

@@ -154,6 +154,7 @@ export const copy = {
     intro:
       "Visite a loja ou fale com a equipe no WhatsApp. Confira o endereço, o horário de atendimento e trace a rota até a SP Motos.",
     address: "Avenida Domingos de Almeida, 3364 — Pelotas/RS",
+    addressShort: "Av. Domingos de Almeida, 3364",
     hours: "Segunda a sexta, 9h às 18h; sábado, 9h ao meio-dia",
     phoneHint: "WhatsApp — Sandra ou Caroline",
     mapHeading: "Onde estamos",

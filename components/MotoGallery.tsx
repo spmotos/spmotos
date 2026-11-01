@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { copy } from "@/lib/copy";
-import { preloadGalleryPhoto } from "@/lib/gallery-preload";
 
 interface MotoGalleryProps {
   titulo: string;
@@ -92,21 +91,16 @@ export const MotoGallery: React.FC<MotoGalleryProps> = ({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [goNext, goPrev, hasMultiple, keyboardRootRef]);
 
-  useEffect(() => {
-    if (!hasMultiple) {
-      return;
+  /** Vizinhas só entram depois da foto principal, para não disputar banda com o LCP. */
+  const [mainLoaded, setMainLoaded] = useState(false);
+  const renderedIndexes = useMemo(() => {
+    const indexes = new Set([currentIndex]);
+    if (mainLoaded && hasMultiple) {
+      indexes.add((currentIndex - 1 + totalPhotos) % totalPhotos);
+      indexes.add((currentIndex + 1) % totalPhotos);
     }
-    const prevIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
-    const nextIndex = (currentIndex + 1) % totalPhotos;
-    const prevPhoto = uniquePhotos[prevIndex];
-    const nextPhoto = uniquePhotos[nextIndex];
-    if (prevPhoto) {
-      preloadGalleryPhoto(prevPhoto);
-    }
-    if (nextPhoto && nextPhoto !== prevPhoto) {
-      preloadGalleryPhoto(nextPhoto);
-    }
-  }, [currentIndex, hasMultiple, totalPhotos, uniquePhotos]);
+    return indexes;
+  }, [currentIndex, hasMultiple, mainLoaded, totalPhotos]);
 
   if (!current) {
     return (
@@ -120,7 +114,11 @@ export const MotoGallery: React.FC<MotoGalleryProps> = ({
     <div className="flex min-w-0 max-w-full flex-col gap-3">
       <div className="relative aspect-[4/3] min-w-0 overflow-hidden rounded-2xl border border-stone bg-muted">
         {uniquePhotos.map((photo, index) => {
+          if (!renderedIndexes.has(index)) {
+            return null;
+          }
           const isActive = photo === current;
+          const isFirst = index === 0;
           return (
             <Image
               key={photo}
@@ -134,8 +132,9 @@ export const MotoGallery: React.FC<MotoGalleryProps> = ({
                 isActive ? "z-10 opacity-100" : "pointer-events-none z-0 opacity-0"
               }`}
               sizes={MAIN_PHOTO_SIZES}
-              priority={index === 0}
-              loading={index === 0 ? undefined : "eager"}
+              loading="eager"
+              fetchPriority={isFirst ? "high" : "low"}
+              onLoad={isActive ? () => setMainLoaded(true) : undefined}
             />
           );
         })}
