@@ -1,6 +1,7 @@
 export const copy = {
   brand: "SP Motos",
-  tagline: "Motos selecionadas. Negociação no WhatsApp.",
+  tagline:
+    "Loja de motos seminovas em Pelotas/RS: financiamento, consórcio e negociação direto no WhatsApp. Há 28 anos no mercado.",
   a11y: {
     skipToContent: "Ir para o conteúdo",
     mainContentId: "conteudo-principal",
@@ -13,8 +14,6 @@ export const copy = {
     menuOpen: "Abrir menu",
     menuClose: "Fechar menu",
   },
-  whatsapp: "Negociar no WhatsApp",
-  whatsappVenda: "Quero vender minha moto",
   whatsappChooseContact: "Escolha com quem conversar:",
   whatsappNegotiateWith: (name: string): string => `Negociar com ${name}`,
   whatsappSellWith: (name: string): string => `Quero vender minha moto — ${name}`,
@@ -33,9 +32,6 @@ export const copy = {
     details: "Ver detalhes",
     badgeNew: "Nova",
     badgeUsed: "Seminova",
-    installmentFrom: "a partir de",
-    installmentHint: "Valor estimado. Fale com a loja no WhatsApp.",
-    location: "Avenida Domingos de Almeida, 3364 — Pelotas/RS",
     noPhoto: "Sem foto",
   },
   filters: {
@@ -45,12 +41,6 @@ export const copy = {
     todasMarcas: "Todas as marcas",
     anyPrice: "Qualquer preço",
     priceUpTo: (value: string): string => `Até ${value}`,
-    marca: "Marca",
-    anoMin: "Ano mínimo",
-    anoMax: "Ano máximo",
-    valorMax: "Preço até",
-    kmMax: "Km até",
-    aplicar: "Filtrar",
     limpar: "Limpar",
     buscar: "Buscar",
   },
@@ -76,7 +66,7 @@ export const copy = {
   },
   home: {
     metaTitle: "SP Motos | Loja de Motos Seminovas em Pelotas/RS",
-    heroKicker: "Sua próxima moto está aqui",
+    heroKicker: "Loja de motos em Pelotas/RS",
     heroTitleLead: "Há 28 anos",
     heroTitleAccent: "realizando sonhos.",
     heroBody:
@@ -87,7 +77,7 @@ export const copy = {
     heroChip2: "Financiamento com as melhores taxas do mercado",
     heroChip3: "Consórcio de motos",
     heroChip4: "Financiamento de moto que você encontrou particular",
-    estoqueTitle: "Estoque",
+    estoqueTitle: "Motos à venda em Pelotas",
     loadMore: "Carregar mais motos",
     loadingMore: "Carregando…",
     allLoaded: "Você viu todas as motos deste filtro.",
@@ -96,16 +86,14 @@ export const copy = {
       count === 1 ? "Mais 1 moto carregada." : `Mais ${count} motos carregadas.`,
   },
   trust: {
-    item1Title: "Motos selecionadas",
-    item1Body: "Estoque curado para vitrine, com ficha e fotos.",
-    item2Title: "Procedência",
-    item2Body: "Informações de origem quando disponíveis na API.",
     item3Title: "WhatsApp da loja",
     item3Body: "Sandra ou Caroline — escolha com quem prefere falar.",
     item4Title: "Fechamento presencial",
     item4Body: "A conclusão da venda é feita na loja.",
   },
   detail: {
+    metaDescription: (resumo: string): string =>
+      `${resumo}. Moto à venda na SP Motos em Pelotas/RS — negocie pelo WhatsApp.`,
     close: "Fechar detalhes da moto",
     modalNotFound: "Esta moto não está mais no estoque.",
     galleryPrev: "Foto anterior",
@@ -123,6 +111,7 @@ export const copy = {
   },
   venda: {
     title: "Venda ou consigne sua moto",
+    metaTitle: "Venda ou consigne sua moto em Pelotas",
     metaDescription:
       "Consignação na SP Motos: sua moto exposta para milhares de clientes, negociação pela equipe e você continua proprietário até fechar a venda.",
     lead:
@@ -159,6 +148,7 @@ export const copy = {
   },
   contato: {
     title: "Contato",
+    metaTitle: "Contato e endereço da loja de motos em Pelotas",
     metaDescription:
       "Endereço, horário e mapa da SP Motos em Pelotas. Veja como chegar e fale com a loja no WhatsApp.",
     intro:
@@ -179,6 +169,6 @@ export const copy = {
     geolocationUnavailable:
       "Localização indisponível neste dispositivo. Use Google Maps ou Waze para traçar a rota.",
   },
-  kmLabel: "km",
   footer: "Liberdade em 2 rodas.",
+  footerNavLabel: "Links do rodapé",
 };

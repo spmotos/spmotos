@@ -4,15 +4,18 @@ import { ConsignacaoVideo } from "@/components/ConsignacaoVideo";
 import { WhatsAppContactButtons } from "@/components/WhatsAppContactButtons";
 import { PageShell } from "@/components/PageShell";
 import { copy } from "@/lib/copy";
+import { buildDefaultOpenGraph } from "@/lib/site-metadata";
 import { buildWhatsAppHrefPlainLinks } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
-  title: copy.venda.title,
+  title: copy.venda.metaTitle,
   description: copy.venda.metaDescription,
-  openGraph: {
-    title: copy.venda.title,
+  alternates: { canonical: "/venda-sua-moto" },
+  openGraph: buildDefaultOpenGraph({
+    title: copy.venda.metaTitle,
     description: copy.venda.metaDescription,
-  },
+    url: "/venda-sua-moto",
+  }),
 };
 
 const VendaSuaMotoPage: FC = () => {

@@ -22,6 +22,7 @@ import {
   QueryValueMap,
 } from "@/lib/estoque-query";
 import { HOME_RECENT_ORDER } from "@/lib/home-hero";
+import { buildDefaultOpenGraph } from "@/lib/site-metadata";
 import { buildWhatsAppHrefPlainLinks } from "@/lib/whatsapp";
 
 export const revalidate = 300;
@@ -30,6 +31,9 @@ export const metadata: Metadata = {
   /** `title.template` do layout não se aplica ao page.tsx do mesmo segmento. */
   title: { absolute: copy.home.metaTitle },
   description: copy.tagline,
+  /** Variações com filtro (`?busca=`, `?marca=`) consolidam na home. */
+  alternates: { canonical: "/" },
+  openGraph: buildDefaultOpenGraph({ title: copy.home.metaTitle, url: "/" }),
 };
 
 interface HomeEstoqueData {

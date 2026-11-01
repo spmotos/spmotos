@@ -9,6 +9,7 @@
     "lint": "eslint",
     "logo:webp": "node scripts/build-logo-webp.mjs",
     "banner:webp": "node scripts/build-banner-webp.mjs",
+    "share:images": "node scripts/build-share-images.mjs",
     "validate:feed": "node --experimental-strip-types scripts/validate-site-feed.ts exemplo.json"
   },
   "dependencies": {

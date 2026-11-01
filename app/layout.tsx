@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import type { FC, ReactNode } from "react";
 import { Geist } from "next/font/google";
+import { JsonLdScript } from "@/components/JsonLdScript";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { brandAssets } from "@/lib/brand";
 import { copy } from "@/lib/copy";
 import { buildDefaultOpenGraph, buildDefaultTwitter, siteMetadataBase } from "@/lib/site-metadata";
+import { buildStoreJsonLd } from "@/lib/structured-data";
 import { buildWhatsAppHrefPlainLinks } from "@/lib/whatsapp";
 import "./globals.css";
 
@@ -29,10 +30,6 @@ export const metadata: Metadata = {
   description: copy.tagline,
   openGraph: buildDefaultOpenGraph(),
   twitter: buildDefaultTwitter(),
-  icons: {
-    icon: brandAssets.favicon.src,
-    apple: brandAssets.favicon.src,
-  },
 };
 
 interface RootLayoutProps {
@@ -47,6 +44,7 @@ const RootLayout: FC<RootLayoutProps> = ({ children, modal }) => (
       <link rel="preconnect" href="https://clickgarage-prod.s3.us-west-1.amazonaws.com" />
     </head>
     <body className="flex min-h-full flex-col overflow-x-clip bg-page text-page-foreground">
+      <JsonLdScript data={buildStoreJsonLd()} />
       <a
         href={`#${copy.a11y.mainContentId}`}
         className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-accent-cta focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:outline-none"

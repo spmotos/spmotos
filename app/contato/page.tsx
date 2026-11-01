@@ -7,15 +7,18 @@ import { StoreMapEmbed } from "@/components/StoreMapEmbed";
 import { WhatsAppContactButtons } from "@/components/WhatsAppContactButtons";
 import { PageShell } from "@/components/PageShell";
 import { copy } from "@/lib/copy";
+import { buildDefaultOpenGraph } from "@/lib/site-metadata";
 import { buildWhatsAppHrefPlainLinks } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
-  title: copy.contato.title,
+  title: copy.contato.metaTitle,
   description: copy.contato.metaDescription,
-  openGraph: {
-    title: copy.contato.title,
+  alternates: { canonical: "/contato" },
+  openGraph: buildDefaultOpenGraph({
+    title: copy.contato.metaTitle,
     description: copy.contato.metaDescription,
-  },
+    url: "/contato",
+  }),
 };
 
 const ContatoPage: FC = () => {
