@@ -20,8 +20,8 @@ export const STORE_WHATSAPP_CONTACTS: StoreWhatsAppContact[] = [
   {
     id: "caroline",
     name: "Caroline",
-    e164: "5553991100585",
-    displayPhone: "(53) 99110-0585",
+    e164: "5553981100585",
+    displayPhone: "(53) 98110-0585",
   },
 ];
 
