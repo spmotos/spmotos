@@ -1,3 +1,4 @@
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -52,3 +53,6 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+/** Bindings da Cloudflare (R2, Images) disponíveis também no `next dev`. */
+initOpenNextCloudflareForDev();
